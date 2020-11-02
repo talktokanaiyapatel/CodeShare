@@ -7,7 +7,7 @@ Output : 1
 Explanation : For A[i] = 7, Difference Absolute | A[i] - B[j] | is greater than d for B[j] = 13, 1 but equal to 3 for B[j] = 4. Hence, 7 does not qualify.
 
 Note : we can use Java Treeset (OlogN for every operation) to get the ceiling of required distance.
-private static int process(int [] A, int [] B, int d){
+private static int findCount(int [] A, int [] B, int d){
        TreeSet<Integer> set = new TreeSet<>();
        for(int element :B){
            set.add(element);
