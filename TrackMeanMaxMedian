@@ -1,0 +1,68 @@
+Write progran that tracks Max, Min, Mean and Mode of integer stream™.
+
+insert()—records a int
+getMax()—returns the highest int we've seen so far
+getMin()—returns the lowest int we've seen so far
+getMean()—returns the mean ↴ of all int we've seen so far
+getMode()—returns a mode ↴ of all int we've seen so far
+Optimize for space and time. Favor speeding up the getter methods getMax(), getMin(), getMean(), and getMode() over speeding up the insert() method.
+
+Solution
+We maintain the maxInt, minInt, mean, and mode as integers are inserted, so that each getter method simply returns an instance variable.
+
+To maintain the mean at each insert, we track the numberOfReadings and the totalSum of numbers inserted so far.
+
+To maintain the mode at each insert, we track the total occurrences of each number, as well as the maxOccurrences we've seen so far.
+
+
+  class NumTracker {
+
+    // for mode
+    private int[] occurrences = new int[111];  // array of 0s at indices 0..110
+    private int maxOccurrences;
+    private int mode;
+
+    // for mean
+    private int numberOfReadings;
+    private long totalSum;
+    private double mean;
+
+    // for min and max
+    private int minInt = Integer.MAX_VALUE;
+    private int maxInt = Integer.MIN_VALUE;
+
+    public void insert(int intValue) {
+
+        // for mode
+        occurrences[intValue]++;
+        if (occurrences[intValue] > maxOccurrences) {
+            mode = intValue;
+            maxOccurrences = occurrences[intValue];
+        }
+
+        // for mean
+        numberOfReadings++;
+        totalSum += intValue;
+        mean = (double) totalSum / numberOfReadings;
+
+        // for min and max
+        minInt = Math.min(minInt, intValue);
+        maxInt = Math.max(maxInt, intValue);
+    }
+
+    public int getMax() {
+        return maxInt;
+    }
+
+    public int getMin() {
+        return minInt;
+    }
+
+    public double getMean() {
+        return mean;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+}
