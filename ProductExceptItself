@@ -1,0 +1,44 @@
+Product of Array Except Self
+
+Given an array nums of n integers where n > 1,  return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+Example:
+
+Input:  [1,2,3,4]
+Output: [24,12,8,6]
+Constraint: It's guaranteed that the product of the elements of any prefix or suffix of the array (including the whole array) fits in a 32 bit integer.
+
+Note: Please solve it without division and in O(n).
+
+public static int[] getProductsOfAllIntsExceptAtIndex(int[] intArray) {
+
+    //Base case
+    if (intArray.length < 2) {
+        throw new IllegalArgumentException("Getting the product of numbers at other indices requires at least 2 numbers");
+    }
+
+    // we make an array with the length of the input array to
+    // hold our products
+    int[] productsOfAllIntsExceptAtIndex = new int[intArray.length];
+
+    // for each integer, we find the product of all the integers
+    // before it, storing the total product so far each time
+    int productSoFar = 1;
+    for (int i = 0; i < intArray.length; i++) {
+        productsOfAllIntsExceptAtIndex[i] = productSoFar;
+        productSoFar *= intArray[i];
+    }
+
+    // for each integer, we find the product of all the integers
+    // after it. since each index in products already has the
+    // product of all the integers before it, now we're storing
+    // the total product of all other integers
+    productSoFar = 1;
+    for (int i = intArray.length - 1; i >= 0; i--) {
+        productsOfAllIntsExceptAtIndex[i] *= productSoFar;
+        productSoFar *= intArray[i];
+    }
+
+    return productsOfAllIntsExceptAtIndex;
+}
+//O(N)
